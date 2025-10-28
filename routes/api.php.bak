@@ -1,0 +1,10 @@
+<?php
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\googleAuthController;
+
+Route::get('/test', function () {
+    return response()->json(['ok' => true]);
+});
+
+
+Route::post('/auth/google', [googleAuthController::class, 'login']);

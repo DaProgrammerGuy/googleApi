@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google Sign-In Test</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script>
+        function handleCredentialResponse(response) {
+            console.log("Encoded ID token:", response.credential);
+
+            // Send to your Laravel API
+            fetch("https://untripping-tatum-finely.ngrok-free.dev/api/auth/google", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    id_token: response.credential,
+                }),
+            })
+                .then((res) => res.json())
+                .then((data) => console.log("Server Response:", data))
+                .catch((err) => console.error("Error:", err));
+        }
+    </script>
+</head>
+
+<body>
+    <h2>Google Sign-In Test</h2>
+
+    <div id="g_id_onload" data-client_id="297920756194-845lvjfre3ujoqi86ah3oh8q0kjhif33.apps.googleusercontent.com"
+        data-context="signin" data-ux_mode="popup" data-callback="handleCredentialResponse" data-auto_prompt="false">
+    </div>
+
+    <div class="g_id_signin" data-type="standard"></div>
+</body>
+
+</html>
